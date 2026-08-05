@@ -16,17 +16,17 @@
         <a href="#experience">Experience</a>
         <a href="#projects">Projects</a>
         <a href="#skills">Skills</a>
+        <a href="#volunteering">Volunteering</a>
         <a href="#contact">Contact</a>
       </div>
     </nav>
 
     <div class="hero-content container">
       <div class="hero-text">
-        <p class="eyebrow">Data Science Portfolio</p>
-        <h1>Hi, I’m Thato Moeng</h1>
+        <p class="eyebrow">Data Science | Data Engineering |Data Analysis |Business Analytics </p>
+        <h1>Thato Moeng</h1>
         <p class="lead">
-          BCom Statistics and Data Science graduate from the University of Pretoria,
-          currently working at BMW Group as a Student Data Scientist in NSC Brand Profitability Controlling.
+          Using Data and AI to Solve Real Business Problems
         </p>
         <div class="hero-actions">
           <a class="btn" href="#projects">View Projects</a>
@@ -43,55 +43,191 @@
     <section id="about" class="section container">
       <h2>About Me</h2>
       <p>
-        I enjoy combining business understanding with quantitative analysis to solve real problems.
-        My focus areas include financial analytics, profitability analysis, dashboard development,
-        and translating data into clear, decision-ready insights.
+        <strong>Statistics and Data Science graduate</strong> with hands on experience in
+        <strong>analytics, reporting automation, and business intelligence</strong> at
+        <strong>BMW Group South Africa</strong>. Skilled in leveraging
+        <strong>Python, Power BI, SQL</strong>, and data driven methodologies to transform
+        complex information into actionable insights. Passionate about using
+        <strong>data, technology, and automation</strong> to solve business problems,
+        improve operational efficiency, and support strategic decision making.
       </p>
     </section>
 
-    <section id="experience" class="section section-alt">
+    <section id="projects" class="section section-alt">
       <div class="container">
-        <h2>Experience</h2>
-        <article class="card">
-          <h3>BMW Group — Student Data Scientist</h3>
-          <p class="meta">NSC Brand Profitability Controlling</p>
-          <ul>
-            <li>Support profitability analysis and controlling workflows.</li>
-            <li>Build dashboards and data models for decision-making.</li>
-            <li>Automate analysis processes and improve reporting quality.</li>
-          </ul>
-        </article>
-      </div>
-    </section>
-
-    <section id="projects" class="section container">
       <div class="section-head">
         <h2>Projects</h2>
-        <p>Current and upcoming data science projects.</p>
+        <p>Data science projects.</p>
       </div>
 
       <div class="project-grid" id="projectGrid">
-        <article class="project-card">
-          <h3>Vehicle Recommendation Engine</h3>
-          <p>Data-driven algorithmic matching system for recommending German vehicles tailored to the South African automotive market.</p>
-          <span class="tag">Recommendation System</span>
-          <a class="project-link" href="https://thatomoeng-ds.github.io/vehicle-recommendation-system/" target="_blank" rel="noopener">View Project →</a>
-        </article>
+        <div class="project-card">
+          <div class="project-cover project-cover-text">
+            <span>Hackaprompt : Cost of Retail Dashboard</span>
+          </div>
+          <h3>Hackaprompt : Cost of Retail Dashboard</h3>
+          <p>
+            A Python ETL pipeline that consolidates 10+ heterogeneous Excel sources into a single
+            self contained interactive HTML dashboard with live KPIs, target vs actual gauges, drill down
+            charts, and an automated image cleanup pipeline, with zero server or BI license required.
+          </p>
+          <a class="project-link" href="./cordashboard.html">View Case Study →</a>
+        </div>
+
+        <div class="project-card">
+          <div class="project-cover project-cover-text">
+            <span>Hackaprompt : Contribution Margin Automation</span>
+          </div>
+          <h3>Hackaprompt : Contribution Margin Automation</h3>
+          <p>
+            A VBA macro that automates monthly contribution margin calculation matching ~25 GL account
+            codes across thousands of ledger rows and reaggregating results into a per model (TAIS)
+            CM/unit breakdown, feeding directly into the Cost of Retail Dashboard.
+          </p>
+          <a class="project-link" href="./contributionmargin.html">View Case Study →</a>
+        </div>
+
+        <div class="project-card">
+          <div class="project-cover project-cover-text">
+            <span>Car Allowance Dashboard</span>
+          </div>
+          <h3>Car Allowance Dashboard</h3>
+          <p>
+            A single self contained HTML app that reimplements a 100+ row, multi tab Excel employee
+            vehicle finance model in JavaScript, parsing 8+ linked workbooks client side and turning a
+            single model, protected spreadsheet tab into an instant, portfolio wide viability dashboard.
+          </p>
+          <a class="project-link" href="./carallowance.html">View Case Study →</a>
+        </div>
+
+        <div class="project-card">
+          <div class="project-cover project-cover-text">
+            <span>Closing Balance Reconciliation Validator</span>
+          </div>
+          <h3>Closing Balance Reconciliation Validator</h3>
+          <p>
+            A VBA macro that batch validates a checklist of linked reconciliation workbooks, following
+            each hyperlink, searching the source tab for a matching closing balance, and writing back an
+            Upload / Do Not Upload decision with colour coded visual feedback on the source file itself.
+          </p>
+          <a class="project-link" href="./balancevalidator.html">View Case Study →</a>
+        </div>
+      </div>
+      </div>
+    </section>
+
+    <section id="experience" class="section container">
+      <div class="container">
+        <h2>Experience</h2>
+        <div class="experience-grid">
+          <article class="card experience-card-square">
+            <div class="experience-cover">
+              <img src="./assets/images/bmwgroup.jpg" alt="BMW Group" />
+            </div>
+            <p class="meta">NSC Brand Profitability Controlling</p>
+            <p class="experience-caption">April 2026- Current</p>
+            <p class="experience-caption"><strong class="highlight-navy">Data Science Intern</strong>, Finance &amp; Analytics.</p>
+            <a class="project-link" href="./bmw_experience.html">View Full Experience →</a>
+          </article>
+
+          <article class="card experience-card-square">
+            <div class="experience-cover">
+              <img src="./assets/images/universityofpretoria.png" alt="User Consultant Intern" />
+            </div>
+            <p class="meta">Dept. of Enrolment and Student Admin</p>
+            <p class="experience-caption">Jan 2026 - Feb 2026</p>
+            <p class="experience-caption"><strong class="highlight-navy">User Consultant Intern</strong>, providing students with technical support.</p>
+            <a class="project-link" href="./user_consultant_intern.html">View Full Experience →</a>
+          </article>
+
+          <article class="card experience-card-square">
+            <div class="experience-cover">
+              <img src="./assets/images/universityofpretoria.png" alt="Statistics Tutor" />
+            </div>
+            <p class="meta">Statistics Department</p>
+            <p class="experience-caption">Feb 2025 - Nov 2025</p>
+            <p class="experience-caption"><strong class="highlight-navy">Statistics Tutor</strong>, supporting student learning and academic success.</p>
+            <a class="project-link" href="./statistics_tutor.html">View Full Experience →</a>
+          </article>
+        </div>
       </div>
     </section>
 
     <section id="skills" class="section section-alt">
       <div class="container">
         <h2>Skills</h2>
-        <div class="skills">
-          <span>Python</span>
-          <span>Pandas</span>
-          <span>SQL</span>
-          <span>Power BI</span>
-          <span>Excel Modeling</span>
-          <span>Data Visualization</span>
-          <span>Financial Analysis</span>
-          <span>Statistical Analysis</span>
+        <p class="section-intro">A blend of analytical, technical, and automation expertise focused on turning data into business impact.</p>
+
+        <div class="skills-group">
+          <h3>Data Science &amp; Analytics</h3>
+          <div class="skills">
+            <span>Data Analysis</span>
+            <span>Statistical Analysis</span>
+            <span>Data Visualisation</span>
+            <span>Data Cleaning</span>
+            <span>Business Intelligence</span>
+            <span>KPI Monitoring</span>
+            <span>Reporting &amp; Insights</span>
+          </div>
+        </div>
+
+        <div class="skills-group">
+          <h3>AI &amp; Automation</h3>
+          <div class="skills">
+            <span>Workflow Automation</span>
+            <span>Process Optimisation</span>
+            <span>AI Solution Development</span>
+            <span>Intelligent Reporting</span>
+            <span>Business Process Improvement</span>
+          </div>
+        </div>
+
+        <div class="skills-group">
+          <h3>Technical Skills</h3>
+          <div class="skills">
+            <span>Python</span>
+            <span>SQL</span>
+            <span>Power BI</span>
+            <span>Power Query</span>
+            <span>DAX</span>
+            <span>Excel VBA</span>
+            <span>SAP</span>
+            <span>GitHub</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="volunteering" class="section section-alt">
+      <div class="container">
+        <h2>Volunteering</h2>
+        <div class="experience-grid">
+          <article class="card experience-card-square">
+            <div class="experience-cover experience-cover-wide">
+              <img src="./assets/images/bmwpelo.jpg" alt="Pelo Ya BMW Group" />
+            </div>
+            <p class="meta">Community Volunteer</p>
+            <p class="experience-caption"><strong class="highlight-navy">Pelo Ya BMW Group</strong>, corporate social investment platform for BMW Group South Africa.</p>
+            <a class="project-link" href="./peloyabmw.html">View Full Experience →</a>
+          </article>
+
+          <article class="card experience-card-square">
+            <div class="experience-cover experience-cover-wide">
+              <img src="./assets/images/mrf.jpg" alt="Mhlanga Rikhotso Foundation" />
+            </div>
+            <p class="meta">Career Services Officer Volunteer</p>
+            <p class="experience-caption"><strong class="highlight-navy">Mhlanga Rikhotso Foundation</strong>, a registered non-profit company empowering high school learners in impoverished communities through education, mentorship, and career guidance.</p>
+            <a class="project-link" href="./mrf.html">View Full Experience →</a>
+          </article>
+
+          <article class="card experience-card-square">
+            <div class="experience-cover experience-cover-wide experience-cover-text">
+              <span>BMW Social Squad</span>
+            </div>
+            <p class="meta">Ideas &amp; Innovation Member</p>
+            <p class="experience-caption"><strong class="highlight-navy">BMW Social Squad</strong>, finding creative ways to make the workplace fun.</p>
+            <a class="project-link" href="./social_squad.html">View Full Experience →</a>
+          </article>
         </div>
       </div>
     </section>
@@ -104,9 +240,8 @@
       <div class="contact-links">
         <a href="#" aria-label="LinkedIn">LinkedIn</a>
         <a href="#" aria-label="GitHub">GitHub</a>
-        <a href="mailto:thato@example.com" aria-label="Email">Email</a>
+        <a href="mailto:moengt472@gmail.com" aria-label="Email">Email</a>
       </div>
-      <p class="tiny-note">Tip: Update your LinkedIn, GitHub, and email links in the source file.</p>
     </section>
   </main>
 

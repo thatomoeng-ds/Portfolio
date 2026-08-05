@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hackaprompt Contribution Margin Automation | Thato Moeng</title>
+  <meta name="description" content="Case study: a VBA automation engine that calculates monthly contribution margin and per-model contribution margin per unit, built by Thato Moeng during Hackaprompt." />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <header class="hero" style="padding-bottom: 0;">
+    <nav class="nav container">
+      <div class="brand">Thato Moeng</div>
+      <div class="nav-links">
+        <a href="./index.html">Home</a>
+        <a href="./index.html#about">About</a>
+        <a href="./index.html#experience">Experience</a>
+        <a href="./index.html#projects">Projects</a>
+        <a href="./index.html#skills">Skills</a>
+        <a href="./index.html#contact">Contact</a>
+      </div>
+    </nav>
+
+    <div class="hero-content container" style="grid-template-columns: 1fr;">
+      <div class="hero-text">
+        <p class="eyebrow">Project Deep Dive</p>
+        <h1>Hackaprompt Contribution Margin Automation</h1>
+        <p class="hero-subtitle">VBA automation engine for monthly and per model contribution margin calculation</p>
+        <p class="meta-item">Hackaprompt Use Case</p>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section container" style="padding-top: 0;">
+      <div class="experience-card">
+        <p class="lead" style="margin-bottom: 14px;">
+          The <strong>Contribution Margin (CM) Automation</strong> is a VBA macro I built during a
+          Hackaprompt use case challenge to replace a fully manual month end calculation. With a single
+          click, it scans a large general ledger style export, isolates the specific accounts that make up
+          contribution margin, and produces both a <strong>total monthly CM figure</strong> and a
+          <strong>CM-per unit breakdown by model (TAIS code)</strong>, feeding directly into the
+          <a href="./cordashboard.html">Cost of Retail Dashboard</a> project.
+        </p>
+
+        <h3 style="margin-top: 28px;">System Architecture</h3>
+        <div class="flow-diagram flow-diagram-columns">
+          <div class="flow-col">
+            <div class="flow-col-title">1 · Input</div>
+            <div class="flow-step">
+              <div class="flow-label">Monthly GL Export</div>
+              <div class="flow-sub">Raw ledger rows: account code, value, category, TAIS reference</div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-label">Reference Account List</div>
+              <div class="flow-sub">~25 hardcoded GL account codes that define "contribution margin"</div>
+            </div>
+          </div>
+
+          <div class="flow-arrow flow-arrow-col">→</div>
+
+          <div class="flow-col">
+            <div class="flow-col-title">2 · VBA Calculation Engine</div>
+            <div class="flow-step">
+              <div class="flow-label">Account Matching &amp; Summation</div>
+              <div class="flow-sub">Dictionary based lookup filters and sums only relevant account rows</div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-label">Category Aggregation</div>
+              <div class="flow-sub">Groups totals by category into a first pass CM breakdown</div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-label">TAIS Key Extraction</div>
+              <div class="flow-sub">Cleans whitespace/non breaking spaces, derives 4 char model code</div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-label">Second Pass Reaggregation</div>
+              <div class="flow-sub">Resums category totals into a per TAIS contribution margin total</div>
+            </div>
+          </div>
+
+          <div class="flow-arrow flow-arrow-col">→</div>
+
+          <div class="flow-col">
+            <div class="flow-col-title">3 · Output</div>
+            <div class="flow-step">
+              <div class="flow-label">Grand Total CM</div>
+              <div class="flow-sub">Single validated monthly contribution margin figure</div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-label">CM per Category</div>
+              <div class="flow-sub">Category level totals written back to the workbook</div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-label">CM per TAIS (Model)</div>
+              <div class="flow-sub">Per model CM/unit table, formatted and text locked for downstream use</div>
+            </div>
+          </div>
+        </div>
+        <p class="muted" style="font-size: .85rem; margin-top: 10px;">
+          A single macro run replaces what used to be a manual filter sum copy exercise repeated every
+          month across a multi thousand row export.
+        </p>
+
+        <h3 style="margin-top: 28px;">Technical Highlights</h3>
+        <div class="tech-highlights">
+          <div class="tech-chip">
+            <span class="tech-chip-num">~25</span>
+            <span class="tech-chip-label">GL account codes matched automatically</span>
+          </div>
+          <div class="tech-chip">
+            <span class="tech-chip-num">2×</span>
+            <span class="tech-chip-label">Dictionary based aggregation passes (category, then TAIS)</span>
+          </div>
+          <div class="tech-chip">
+            <span class="tech-chip-num">Aa</span>
+            <span class="tech-chip-label">String cleaning logic for inconsistent TAIS key formats</span>
+          </div>
+          <div class="tech-chip">
+            <span class="tech-chip-num">Text</span>
+            <span class="tech-chip-label">Forced text formatting to prevent code truncation</span>
+          </div>
+          <div class="tech-chip">
+            <span class="tech-chip-num">1-click</span>
+            <span class="tech-chip-label">One click recalculation, no manual filtering</span>
+          </div>
+          <div class="tech-chip">
+            <span class="tech-chip-num">6×</span>
+            <span class="tech-chip-label">Reused monthly across 6 separate reporting workbooks</span>
+          </div>
+        </div>
+
+        <h3 style="margin-top: 28px;">The Problem</h3>
+        <p>
+          Contribution margin is not a single line item in the raw ledger export, it's the sum of roughly
+          two dozen specific account codes scattered across thousands of rows. Every month, someone had to
+          manually filter the export for those exact accounts, sum the values, and then regroup the result
+          by model to understand which products were actually profitable. Doing this by hand was slow,
+          repetitive, and risked human error, a single missed account code or mistyped filter could throw
+          off the entire monthly figure.
+        </p>
+
+        <h3 style="margin-top: 28px;">My Approach &amp; Thought Process</h3>
+        <ul>
+          <li>
+            <strong>Started by defining "contribution margin" as data, not as a formula.</strong> Rather
+            than hardcoding a single Excel SUMIF, I built a <code>Scripting.Dictionary</code> lookup table
+            of every account code that legitimately belongs to the CM calculation. This makes the definition
+            of CM explicit, auditable, and easy to extend if the chart of accounts changes.
+          </li>
+          <li>
+            <strong>Designed a two-pass aggregation strategy.</strong> The first pass walks the raw ledger
+            once, matching rows against the account dictionary and accumulating both a grand total and a
+            category-level breakdown in a single loop avoiding the performance cost of scanning the sheet
+            multiple times for different groupings.
+          </li>
+          <li>
+            <strong>Solved a messy real world data problem: inconsistent model codes.</strong> The TAIS
+            (model) reference embedded in the category label wasn't clean it had leading letters, stray
+            spaces, and even non breaking space characters (<code>Chr(160)</code>) mixed in. I wrote explicit
+            cleaning logic to strip those out and reliably extract the last four characters as the true
+            model key, turning "N&nbsp;&nbsp;0E91" into the correct "0E91".
+          </li>
+          <li>
+            <strong>Ran a second aggregation pass keyed on the cleaned model code</strong>, summing the
+            category level results into a final per- TAIS contribution margin giving the business a
+            model by model profitability view derived directly from the same ledger data, with zero manual
+            regrouping.
+          </li>
+          <li>
+            <strong>Protected the output from a classic spreadsheet bug.</strong> Model codes can look
+            numeric (e.g. "0E91"), which Excel will silently reformat or truncate leading zeros from if left
+            as General format. I explicitly forced the output column to Text format and prefixed values with
+            an apostrophe, guaranteeing every model code displays and stores exactly as intended.
+          </li>
+          <li>
+            <strong>Made the output ready for direct reuse.</strong> The grand total lands in a single
+            fixed cell, the category breakdown writes to one output range, and the TAIS-level breakdown
+            writes to another all in well-known, stable locations. This predictability is exactly why this
+            macro's grand total cell later became a direct data source read straight into the
+            <a href="./cordashboard.html">Cost of Retail Dashboard's</a> Python build pipeline, closing the
+            loop between a manual finance process and a fully automated reporting system.
+          </li>
+        </ul>
+
+        <h3 style="margin-top: 28px;">Key Features</h3>
+        <ul>
+          <li>One click <strong>SumAccountValues</strong> macro replaces a multi step manual filter and sum process.</li>
+          <li>Explicit, editable <strong>account code dictionary</strong>, the definition of "contribution margin" lives in one place.</li>
+          <li>Automatic <strong>grand total</strong> calculation with proper numeric formatting.</li>
+          <li><strong>Category level CM breakdown</strong> as an intermediate, auditable output.</li>
+          <li>Robust <strong>TAIS key cleaning</strong> that handles inconsistent spacing and hidden characters.</li>
+          <li><strong>Per model CM/unit table</strong> with forced text formatting to protect model codes.</li>
+          <li>Designed to be <strong>rerun monthly</strong> across multiple reporting workbooks with identical logic.</li>
+        </ul>
+
+        <h3 style="margin-top: 28px;">Impact</h3>
+        <ul>
+          <li>Replaced a fully manual, multi step monthly reconciliation with a <strong>single one click calculation</strong>.</li>
+          <li>Automated matching against <strong>~25 specific GL account codes</strong> across thousands of ledger rows.</li>
+          <li>Eliminated a recurring source of human error in model code cleanup and category grouping.</li>
+          <li>Produced a reliable, model level CM dataset that now feeds directly into a downstream Python reporting pipeline.</li>
+          <li>Standardised the calculation logic across <strong>6 monthly workbooks</strong>, ensuring consistent figures every reporting cycle.</li>
+        </ul>
+
+        <div class="tags">
+          <span class="tag">VBA</span>
+          <span class="tag">Excel Automation</span>
+          <span class="tag">Scripting.Dictionary</span>
+          <span class="tag">Data Cleaning</span>
+          <span class="tag">Financial Reporting</span>
+          <span class="tag">Process Automation</span>
+          <span class="tag">Data Modelling</span>
+        </div>
+
+        <div class="hero-actions" style="margin-top: 24px;">
+          <a class="btn" href="./index.html#projects">Back to Portfolio</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>© <span id="year"></span> Thato Moeng. Built with data + purpose.</p>
+    </div>
+  </footer>
+
+  <script src="./script.js"></script>
+</body>
+</html>

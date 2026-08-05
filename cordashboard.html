@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hackaprompt Cost of Retail Dashboard | Thato Moeng</title>
+  <meta name="description" content="Case study: a self-contained, Python-generated interactive HTML dashboard for retail cost and volume analysis, built by Thato Moeng during Hackaprompt." />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <header class="hero" style="padding-bottom: 0;">
+    <nav class="nav container">
+      <div class="brand">Thato Moeng</div>
+      <div class="nav-links">
+        <a href="./index.html">Home</a>
+        <a href="./index.html#about">About</a>
+        <a href="./index.html#experience">Experience</a>
+        <a href="./index.html#projects">Projects</a>
+        <a href="./index.html#skills">Skills</a>
+        <a href="./index.html#contact">Contact</a>
+      </div>
+    </nav>
+
+    <div class="hero-content container" style="grid-template-columns: 1fr;">
+      <div class="hero-text">
+        <p class="eyebrow">Project Deep Dive</p>
+        <h1>Hackaprompt Cost of Retail Dashboard</h1>
+        <p class="hero-subtitle">Self-contained interactive HTML dashboard for retail cost &amp; volume reporting</p>
+        <p class="meta-item">Hackaprompt Use Case</p>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section container" style="padding-top: 0;">
+      <div class="experience-card">
+        <p class="lead" style="margin-bottom: 14px;">
+          The <strong>Cost of Retail (CoR) Dashboard</strong> is an end-to-end data engineering and
+          analytics project I built during a Hackaprompt use-case challenge: a Python ETL pipeline that
+          ingests <strong>multiple heterogeneous Excel data sources</strong>, resolves business logic that
+          would normally live inside a BI tool, and compiles everything into a single, self-contained,
+          interactive <strong>HTML analytics application</strong>. No server, no database, no BI license,
+          and no live connection required to view it.
+        </p>
+
+        <h3 style="margin-top: 28px;">System Architecture</h3>
+        <div class="flow-diagram flow-diagram-columns">
+          <div class="flow-col">
+            <div class="flow-col-title">1 · Data Sources</div>
+            <div class="flow-step">
+              <div class="flow-label">Transactions Workbook</div>
+              <div class="flow-sub">Raw sales rows: period, model, sale type, category, net retail, cost</div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-label">Targets &amp; Support Parameters</div>
+              <div class="flow-sub">7+ target blocks: margin, support, rate, net retail by model &amp; month</div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-label">Monthly Margin Workbooks</div>
+              <div class="flow-sub">6 separate files auto matched to their reporting month</div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-label">Simulation &amp; Budget Files</div>
+              <div class="flow-sub">External planning workbook (.xlsb) for category level targets</div>
+            </div>
+          </div>
+
+          <div class="flow-arrow flow-arrow-col">→</div>
+
+          <div class="flow-col">
+            <div class="flow-col-title">2 · Python ETL Engine</div>
+            <div class="flow-step">
+              <div class="flow-label">Parsing &amp; Extraction</div>
+              <div class="flow-sub">openpyxl + pandas/pyxlsb, ~15 dedicated extractor functions</div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-label">Cleaning &amp; Normalisation</div>
+              <div class="flow-sub">Period label harmonisation, type coercion, null safe casting</div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-label">Entity Resolution</div>
+              <div class="flow-sub">Joins targets to transactions by model code across 7 target tables</div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-label">Image Processing Pipeline</div>
+              <div class="flow-sub">Pillow: banner detection, background masking, caching</div>
+            </div>
+          </div>
+
+          <div class="flow-arrow flow-arrow-col">→</div>
+
+          <div class="flow-col">
+            <div class="flow-col-title">3 · Compiled Output</div>
+            <div class="flow-step">
+              <div class="flow-label">Structured Data Model</div>
+              <div class="flow-sub">Records + lookup tables serialised to JSON, embedded in HTML</div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-label">Client-Side Analytics Engine</div>
+              <div class="flow-sub">JS reaggregates KPIs &amp; resolves month specific targets on the fly</div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-label">Interactive Visual Layer</div>
+              <div class="flow-sub">Chart.js gauge, stacked &amp; drill down charts, dynamic filters</div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-label">One Portable File</div>
+              <div class="flow-sub">Single dashboard.html opens anywhere, no install required</div>
+            </div>
+          </div>
+        </div>
+        <p class="muted" style="font-size: .85rem; margin-top: 10px;">
+          One command rebuilds the entire dashboard from scratch, reading every source file, recomputing
+          every metric, and regenerating the finished HTML output.
+        </p>
+
+        <h3 style="margin-top: 28px;">Technical Highlights</h3>
+        <div class="tech-highlights">
+          <div class="tech-chip">
+            <span class="tech-chip-num">~15</span>
+            <span class="tech-chip-label">Python extraction functions</span>
+          </div>
+          <div class="tech-chip">
+            <span class="tech-chip-num">20+</span>
+            <span class="tech-chip-label">Excel worksheets processed automatically</span>
+          </div>
+          <div class="tech-chip">
+            <span class="tech-chip-num">JSON</span>
+            <span class="tech-chip-label">JSON serialization layer</span>
+          </div>
+          <div class="tech-chip">
+            <span class="tech-chip-num">Client</span>
+            <span class="tech-chip-label">Client side aggregation engine</span>
+          </div>
+          <div class="tech-chip">
+            <span class="tech-chip-num">Auto</span>
+            <span class="tech-chip-label">Automated image cleaning pipeline</span>
+          </div>
+          <div class="tech-chip">
+            <span class="tech-chip-num">1 file</span>
+            <span class="tech-chip-label">Single file deployment architecture</span>
+          </div>
+        </div>
+
+        <h3 style="margin-top: 28px;">The Problem</h3>
+        <p>
+          The business needed a recurring view of retail volumes and cost-of-retail performance across
+          product categories, individual models, and sale types (new vs. used), but the numbers that
+          make that view meaningful live scattered across a dozen different files: a main transactions
+          export, a separate parameters workbook with seven distinct target tables, six monthly margin
+          workbooks, and an external planning file for category level targets. Reconciling all of this by
+          hand every reporting cycle was slow, error prone, and impossible to share with anyone who didn't
+          have a BI license or direct access to the raw files.
+        </p>
+
+        <h3 style="margin-top: 28px;">My Approach &amp; Thought Process</h3>
+        <ul>
+          <li>
+            <strong>Reverse-engineered the data model before writing a single chart.</strong> I audited
+            every source workbook column by column and documented exactly which fields mattered period,
+            transaction type, sale type, model code, category, net retail, and cost mapping each one to a
+            named constant so the extraction logic stayed transparent and safe to rerun every month.
+          </li>
+          <li>
+            <strong>Consolidated seven separate target tables into one coherent join.</strong> Margin,
+            support, rate, and net-retail targets each lived in their own block of a parameters sheet, keyed
+            by model code and month. I wrote a dedicated extractor for each block and joined them all back
+            to the transaction level records by model code, the kind of multi source entity resolution
+            that turns disconnected spreadsheets into a single trustworthy dataset.
+          </li>
+          <li>
+            <strong>Made a deliberate architecture trade-off: compute targets client side, not at build time.</strong>
+            Because targets vary by month, baking a single "actual vs. target" number into the build would
+            have meant re-running the whole pipeline every time someone changed the month filter. Instead,
+            I embedded the full month by model target lookup tables as JSON and resolved them in JavaScript
+            at render time, keeping the dashboard instantly interactive without sacrificing accuracy.
+          </li>
+          <li>
+            <strong>Designed for a "single file, zero dependency" output.</strong> All filtering and
+            interactivity runs client side in the browser, with every data table embedded as JSON directly
+            inside the HTML. The finished dashboard opens in any browser with no installation, no login,
+            and no network dependency which is ideal for sharing with stakeholders who don't have BI tool access.
+          </li>
+          <li>
+            <strong>Built KPI cards that tell the story at a glance</strong>: retail sales volume,
+            contribution margin, new item margin, and used item margin, each with a target vs actual
+            sub-label so a viewer immediately sees whether performance is on track without digging into charts.
+          </li>
+          <li>
+            <strong>Layered in visual analytics with Chart.js</strong>: a cost percentage gauge benchmarked
+            against the quarterly target, a stacked bar chart breaking down volume/cost by category and
+            month, and a model level chart for granular drill down, all re-rendered client side whenever
+            a filter changes, with an additional ranking view surfacing the best and worst performing
+            models by margin-per-unit each month.
+          </li>
+          <li>
+            <strong>Solved a real image-quality problem with automated computer vision style cleanup.</strong>
+            Reference product images arrived with inconsistent banners and backgrounds. I wrote a Pillow based
+            pipeline that samples pixel regions to detect and crop banner strips, builds an edge background
+            mask to distinguish subject from background, and caches a cleaned version of every image, so the
+            dashboard always displays a consistent, professional visual regardless of source photo quality.
+          </li>
+          <li>
+            <strong>Treated it like a production release, not a one off script.</strong> The generator writes
+            a single reproducible HTML output every time it runs, so refreshing the dashboard against a new
+            month's data is a one command rebuild. I tracked the build script's evolution with <strong>Git
+            version control</strong>, committing incrementally as each extractor and chart was added, turning
+            what used to be a manual, multi-workbook exercise into a repeatable, auditable process with the
+            raw data always traceable back to source.
+          </li>
+        </ul>
+
+        <h3 style="margin-top: 28px;">Key Features</h3>
+        <ul>
+          <li>Fully client-side filtering by <strong>category, model, sale type, and month</strong>, no page reloads or server round trips.</li>
+          <li>Live KPI cards for <strong>volume, contribution margin, new margin, and used margin</strong>, each compared against a dynamically resolved target.</li>
+          <li>A <strong>cost % gauge chart</strong> benchmarked against quarterly and category specific targets pulled from a separate planning file.</li>
+          <li>Stacked <strong>category breakdown chart</strong> with per month detail across the full reporting period.</li>
+          <li><strong>Model level drill down</strong> chart plus a best/worst <strong>margin per unit ranking</strong> for the current month.</li>
+          <li>A second exec summary tab with headline <strong>total / new / used volume and cost%</strong> KPIs.</li>
+          <li>Automated <strong>reference image cleanup</strong> pipeline (banner cropping + background masking) using Pillow.</li>
+          <li>Single self contained HTML output which is shareable via email or a shared drive, opens in any browser.</li>
+        </ul>
+
+        <h3 style="margin-top: 28px;">Impact</h3>
+        <ul>
+          <li>Reduced monthly reporting preparation from an estimated <strong>~4 hours to ~15 minutes</strong> per cycle,  a single command replaces manual cross referencing.</li>
+          <li>Automated consolidation across <strong>20+ Excel worksheets and 10+ source files</strong>, spanning 4 different file formats (.xlsx, .xlsm, .xlsb).</li>
+          <li>Eliminated an estimated <strong>90% of manual data preparation effort</strong> previously spent reconciling seven separate target tables and six monthly margin workbooks by hand.</li>
+          <li>Removed the dependency on BI licensing for distribution entirely, any stakeholder can open the finished dashboard in a browser with zero setup.</li>
+          <li>Made the reporting process reproducible and auditable, with every figure traceable back to its original source file.</li>
+        </ul>
+
+        <div class="tags">
+          <span class="tag">Python</span>
+          <span class="tag">openpyxl</span>
+          <span class="tag">pandas</span>
+          <span class="tag">Pillow (PIL)</span>
+          <span class="tag">ETL &amp; Data Pipelines</span>
+          <span class="tag">Chart.js</span>
+          <span class="tag">HTML/CSS/JavaScript</span>
+          <span class="tag">Data Modelling</span>
+          <span class="tag">Data Visualisation</span>
+          <span class="tag">Financial Reporting</span>
+          <span class="tag">Business Intelligence</span>
+          <span class="tag">Git / Version Control</span>
+        </div>
+
+        <div class="hero-actions" style="margin-top: 24px;">
+          <a class="btn" href="./index.html#projects">Back to Portfolio</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>© <span id="year"></span> Thato Moeng. Built with data + purpose.</p>
+    </div>
+  </footer>
+
+  <script src="./script.js"></script>
+</body>
+</html>

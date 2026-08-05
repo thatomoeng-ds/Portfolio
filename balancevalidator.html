@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Closing Balance Reconciliation Validator | Thato Moeng</title>
+  <meta name="description" content="Case study: a VBA macro that automatically validates closing balances across a checklist of linked reconciliation workbooks, built by Thato Moeng." />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <header class="hero" style="padding-bottom: 0;">
+    <nav class="nav container">
+      <div class="brand">Thato Moeng</div>
+      <div class="nav-links">
+        <a href="./index.html">Home</a>
+        <a href="./index.html#about">About</a>
+        <a href="./index.html#experience">Experience</a>
+        <a href="./index.html#projects">Projects</a>
+        <a href="./index.html#skills">Skills</a>
+        <a href="./index.html#contact">Contact</a>
+      </div>
+    </nav>
+
+    <div class="hero-content container" style="grid-template-columns: 1fr;">
+      <div class="hero-text">
+        <p class="eyebrow">Project Deep Dive</p>
+        <h1>Closing Balance Reconciliation Validator</h1>
+        <p class="hero-subtitle">VBA automation that cross checks a checklist of linked recon workbooks against their reported closing balances</p>
+        <p class="meta-item">Internal Automation Project</p>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section container" style="padding-top: 0;">
+      <div class="experience-card">
+        <p class="lead" style="margin-bottom: 14px;">
+          The <strong>Closing Balance Reconciliation Validator</strong> is a VBA macro that automates a
+          tedious, error prone month end control: confirming that the "Total Balance (Current)" figure a
+          preparer typed into a master <strong>Check list</strong> actually matches a value that genuinely
+          exists somewhere in their underlying reconciliation workbook. Instead of a reviewer opening every
+          linked file by hand, the macro follows each hyperlink automatically, searches the recon's
+          <strong>Summary</strong> or <strong>Recon</strong> tab for a matching figure, and writes back a clear
+          <strong>Upload</strong> / <strong>Do Not Upload</strong> decision with the source tab itself
+          colour coded green or red so the result is visible at a glance even without opening the file.
+        </p>
+
+        <h3 style="margin-top: 28px;">System Architecture</h3>
+        <div class="flow-diagram flow-diagram-columns">
+          <div class="flow-col">
+            <div class="flow-col-title">1 · Input</div>
+            <div class="flow-step">
+              <div class="flow-label">Master "Check list" sheet</div>
+              <div class="flow-sub">One row per reconciliation: a hyperlink/path to the recon file (col G) and its reported Total Balance (col I)</div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-label">Linked Recon Workbooks</div>
+              <div class="flow-sub">Dozens of separate .xlsx files, each with either a "Summary" or "Recon" tab</div>
+            </div>
+          </div>
+          <div class="flow-col">
+            <div class="flow-col-title">2 · VBA Validation Engine</div>
+            <div class="flow-step">
+              <div class="flow-label">Read Only Batch Opening</div>
+              <div class="flow-sub">Opens each linked workbook in the background (ReadOnly:=True), one at a time</div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-label">Summary → Recon Fallback</div>
+              <div class="flow-sub">Prefers a "Summary" tab; falls back to "Recon" if Summary doesn't exist</div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-label">Whole Sheet Value Search</div>
+              <div class="flow-sub">Scans every cell in the source tab's UsedRange for a number within 0.01 of the reported balance</div>
+            </div>
+          </div>
+          <div class="flow-col">
+            <div class="flow-col-title">3 · Output</div>
+            <div class="flow-step">
+              <div class="flow-label">Upload / Do Not Upload</div>
+              <div class="flow-sub">Written to the Decision column (J) on the master Check list, per row</div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-label">Colour Coded Source Tabs</div>
+              <div class="flow-sub">The recon's own Summary/Recon tab is tinted green (match found) or red (no match), visible on next open</div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-label">Exception Reasons</div>
+              <div class="flow-sub">"No link", "Cannot open recon", "Summary or Recon sheet not found" every failure mode is labelled, not silently skipped</div>
+            </div>
+          </div>
+        </div>
+
+        <h3 style="margin-top: 28px;">Technical Highlights</h3>
+        <div class="tech-highlights">
+          <div class="tech-chip">
+            <div class="tech-chip-num">3</div>
+            <div class="tech-chip-label">columns driving the whole process: link (G), reported total (I), decision (J)</div>
+          </div>
+          <div class="tech-chip">
+            <div class="tech-chip-num">0.01</div>
+            <div class="tech-chip-label">tolerance for floating point safe balance matching</div>
+          </div>
+          <div class="tech-chip">
+            <div class="tech-chip-num">2</div>
+            <div class="tech-chip-label">candidate tab names checked per workbook: Summary, then Recon</div>
+          </div>
+          <div class="tech-chip">
+            <div class="tech-chip-num">3</div>
+            <div class="tech-chip-label">distinct exception states surfaced instead of one generic failure</div>
+          </div>
+          <div class="tech-chip">
+            <div class="tech-chip-num">1-click</div>
+            <div class="tech-chip-label">batch validation across every row on the Check list</div>
+          </div>
+          <div class="tech-chip">
+            <div class="tech-chip-num">Read-only</div>
+            <div class="tech-chip-label">every linked workbook opened without risk of accidental edits being saved</div>
+          </div>
+        </div>
+
+        <h3 style="margin-top: 28px;">The Problem</h3>
+        <p>
+          Month end sign off required a reviewer to manually open dozens of individual reconciliation files,
+          hunt through each one for a "Total Balance" figure, and compare it by eye against what the preparer
+          had typed into a shared Check list, a process that was slow, easy to get wrong on a busy close,
+          and gave no visible record of <em>why</em> a reconciliation had or hadn't been approved for upload.
+        </p>
+
+        <h3 style="margin-top: 28px;">My Approach &amp; Thought Process</h3>
+        <ul>
+          <li>
+            <strong>Anchored the whole process on three columns.</strong> Rather than trying to standardise
+            every recon workbook's layout, I kept the Check list itself as the single control point: column
+            G holds the link/path to the recon file, column I holds the reported Total Balance, and column J
+            is where the macro writes its decision, so the process works no matter how the underlying
+            recon files are structured internally.
+          </li>
+          <li>
+            <strong>Made file access resilient with defensive error handling.</strong> Every
+            <code>Workbooks.Open</code> and sheet lookup is wrapped in <code>On Error Resume Next</code> /
+            <code>On Error GoTo 0</code> pairs, so a broken hyperlink, a missing file, or a renamed tab
+            doesn't crash the whole batch, it just records a specific reason ("Cannot open recon", "Summary
+            or Recon sheet not found") on that one row and moves on to the next.
+          </li>
+          <li>
+            <strong>Built a Summary first, Recon fallback lookup.</strong> Different preparers had settled on
+            different tab names for their totals, so the macro tries <code>wbRecon.Sheets("Summary")</code>
+            first and only falls back to <code>wbRecon.Sheets("Recon")</code> if that fails — covering both
+            conventions without needing every workbook to be re-templated first.
+          </li>
+          <li>
+            <strong>Searched for the value itself rather than trusting a fixed cell address.</strong> Because
+            recon layouts vary from file to file, the macro loops every cell in the source tab's
+            <code>UsedRange</code> and checks each numeric value against the reported total with a small
+            tolerance (<code>Abs(cellValue - totalBalanceValue) &lt;= 0.01</code>), so it finds the figure
+            wherever it happens to sit, rather than assuming it's always in the same row/column.
+          </li>
+          <li>
+            <strong>Turned the result into an at a glance visual signal, not just a text label.</strong> In
+            addition to writing "Upload" / "Do Not Upload" back to the Check list, the macro also colours the
+            recon's own source tab green or red so the next person to open that individual workbook sees
+            the outcome immediately, without needing to go back to the master checklist at all.
+          </li>
+          <li>
+            <strong>Closed every workbook cleanly regardless of outcome.</strong> Each opened recon file is
+            explicitly closed with <code>SaveChanges:=False</code> before moving to the next row, and object
+            references are reset in a shared cleanup label (<code>NextRow:</code>) preventing the macro
+            from leaving dozens of read only workbooks open in the background during a large batch run.
+          </li>
+        </ul>
+
+        <h3 style="margin-top: 28px;">Key Features</h3>
+        <ul>
+          <li>Fully automated, one click validation of every reconciliation on the Check list in a single run</li>
+          <li>Reads reported totals and links straight from the master Check list no retemplating of existing recon files required</li>
+          <li>Summary then Recon tab fallback covers both naming conventions already in use across the team</li>
+          <li>Tolerant numeric matching (±0.01) makes the check robust to minor floating point/rounding differences</li>
+          <li>Distinct, human readable exception messages for every failure mode instead of a single generic error</li>
+          <li>Visual green/red tab colour coding on the source workbook itself, in addition to the Check list decision column</li>
+          <li>Read only, auto closing workbook handling keeps the process safe to rerun at any time</li>
+        </ul>
+
+        <h3 style="margin-top: 28px;">Impact</h3>
+        <ul>
+          <li>Replaced a fully manual, file by file review with a single click that validates the entire reconciliation batch</li>
+          <li>Removed reviewer guesswork, every row gets an explicit Upload / Do Not Upload decision with a stated reason on failure</li>
+          <li>Reduced the risk of an incorrect balance being uploaded during month end close due to human oversight</li>
+          <li>Gives preparers immediate, visible feedback (tab colour) on their own recon file without waiting on a reviewer</li>
+          <li>Safe to rerun at any point in the close cycle since every source file is opened read only and closed without saving</li>
+        </ul>
+
+        <div class="tags" style="margin-top: 24px;">
+          <span class="tag">VBA</span>
+          <span class="tag">Excel Automation</span>
+          <span class="tag">Reconciliation</span>
+          <span class="tag">Data Validation</span>
+          <span class="tag">Financial Controls</span>
+          <span class="tag">Process Automation</span>
+          <span class="tag">Error Handling</span>
+        </div>
+
+        <div class="hero-actions" style="margin-top: 24px;">
+          <a class="btn" href="./index.html#projects">Back to Portfolio</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <p>&copy; 2026 Thato Moeng. Built with curiosity and coffee.</p>
+    </div>
+  </footer>
+</body>
+</html>

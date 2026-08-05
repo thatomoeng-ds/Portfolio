@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Car Allowance Dashboard | Thato Moeng</title>
+  <meta name="description" content="Case study: a browser-based financial modelling engine that re-implements a multi-tab Excel employee vehicle scheme, built by Thato Moeng." />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <header class="hero" style="padding-bottom: 0;">
+    <nav class="nav container">
+      <div class="brand">Thato Moeng</div>
+      <div class="nav-links">
+        <a href="./index.html">Home</a>
+        <a href="./index.html#about">About</a>
+        <a href="./index.html#experience">Experience</a>
+        <a href="./index.html#projects">Projects</a>
+        <a href="./index.html#skills">Skills</a>
+        <a href="./index.html#contact">Contact</a>
+      </div>
+    </nav>
+
+    <div class="hero-content container" style="grid-template-columns: 1fr;">
+      <div class="hero-text">
+        <p class="eyebrow">Project Deep Dive</p>
+        <h1>Car Allowance Dashboard</h1>
+        <p class="hero-subtitle">A browser based financial engine that reimplements a multitab Excel employee vehicle scheme. No macros, no server, just a single HTML file</p>
+        <p class="meta-item">Internal Automation Project</p>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section container" style="padding-top: 0;">
+      <div class="experience-card">
+        <p class="lead" style="margin-bottom: 14px;">
+          The <strong>Car Allowance Dashboard</strong> recreates a heavyweight, formula locked Excel
+          workbook, a company car / employee vehicle finance scheme spread across 8+ linked worksheets
+          as a single, self contained HTML application that runs entirely in the browser. Instead of asking
+          finance analysts to open, unprotect, and manually rekey figures into a fragile "New Scheme" tab
+          for every model, the dashboard reads the raw source workbooks directly, faithfully reimplements
+          every formula in JavaScript, and renders a live, auditable breakdown with the row by row logic
+          annotated against the exact Excel cell references it replaces (C15, C24, C39, C93, C112 and more).
+        </p>
+
+        <h3 style="margin-top: 28px;">System Architecture</h3>
+        <div class="flow-diagram flow-diagram-columns">
+          <div class="flow-col">
+            <div class="flow-col-title">1 · Data Sources</div>
+            <div class="flow-step">
+              <div class="flow-label">8 Linked Workbooks</div>
+              <div class="flow-sub">December pricing, December Options, Dealer Billing, Retail Margin, ZFLEET WIMS%, Models &amp; Vol, Optional Motorplan, Other Parameters</div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-label">User-supplied files</div>
+              <div class="flow-sub">Drag and drop, folder watch (File System Access API), or a published JSON snapshot three ways to load data</div>
+            </div>
+          </div>
+          <div class="flow-col">
+            <div class="flow-col-title">2 · Parsing &amp; Matching Engine</div>
+            <div class="flow-step">
+              <div class="flow-label">SheetJS Ingestion</div>
+              <div class="flow-sub">Reads .xlsb/.xlsx/.xlsm client side, merges multi row headers, resolves merged cells</div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-label">Fuzzy Column Resolver</div>
+              <div class="flow-sub">Token matches header names (e.g. "Retail (excl VAT)" → RETAIL_EXCL_VAT) so renamed columns don't break the model</div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-label">Fixed-Position Lookups</div>
+              <div class="flow-sub">Financial formulas read by exact Excel column letter (e.g. December!AU, Dealer Billing!I), mirroring the workbook's own VLOOKUPs</div>
+            </div>
+          </div>
+          <div class="flow-col">
+            <div class="flow-col-title">3 · Output</div>
+            <div class="flow-step">
+              <div class="flow-label">Per Model Breakdown</div>
+              <div class="flow-sub">Vehicle cost → loan value → monthly cost → group P/L → company P/L, with viability verdicts</div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-label">Executive Summary Ladder</div>
+              <div class="flow-sub">Volume weighted portfolio roll up: viable vs. not viable units, biggest non viable exposures</div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-label">CSV Export</div>
+              <div class="flow-sub">One click export of every computed field for finance sign off</div>
+            </div>
+          </div>
+        </div>
+
+        <h3 style="margin-top: 28px;">Technical Highlights</h3>
+        <div class="tech-highlights">
+          <div class="tech-chip">
+            <div class="tech-chip-num">8+</div>
+            <div class="tech-chip-label">linked source workbooks parsed per run</div>
+          </div>
+          <div class="tech-chip">
+            <div class="tech-chip-num">30+</div>
+            <div class="tech-chip-label">Excel formula rows reimplemented (C15–C114)</div>
+          </div>
+          <div class="tech-chip">
+            <div class="tech-chip-num">3</div>
+            <div class="tech-chip-label">data loading modes: drag drop, live folder watch, published JSON feed</div>
+          </div>
+          <div class="tech-chip">
+            <div class="tech-chip-num">2</div>
+            <div class="tech-chip-label">parallel spines - Profitability View and Tax View - computed from the same inputs</div>
+          </div>
+          <div class="tech-chip">
+            <div class="tech-chip-num">0</div>
+            <div class="tech-chip-label">servers, installs, or macros required - a single static HTML file</div>
+          </div>
+          <div class="tech-chip">
+            <div class="tech-chip-num">100%</div>
+            <div class="tech-chip-label">client-side - sensitive pricing data never leaves the browser</div>
+          </div>
+        </div>
+
+        <h3 style="margin-top: 28px;">The Problem</h3>
+        <p>
+          The "New Scheme" tab of the source workbook is the single source of truth for whether offering a
+          particular vehicle on the employee scheme is financially viable but it's a hand built Excel model
+          full of hard coded <code>VLOOKUP</code>s into seven other tabs, a specific column layout that
+          silently breaks if a sheet is reordered, and it only ever shows one model at a time. Getting a
+          portfolio-wide view meant either manually pasting dozens of models through the same protected tab,
+          or trusting a stale, months old summary. There was no fast way to answer: <em>"which models are
+          costing us money on this scheme right now, and by how much?"</em>
+        </p>
+
+        <h3 style="margin-top: 28px;">My Approach &amp; Thought Process</h3>
+        <ul>
+          <li>
+            <strong>Treated the Excel tab as a specification, not a black box.</strong> Rather than trying to
+            read live formulas out of the workbook, I opened the "New Scheme" tab cell by cell and
+            rederived every row's logic cost of the vehicle (C15–C28), loan value to the employee
+            (C34–C50), monthly cost (C56–C58), group profit/loss (C77–C95), and company profit/loss
+            (C101–C114) then reproduced each one as a plain JavaScript expression, keeping the original
+            cell reference as a code comment so the two can always be checked against each other line by line.
+          </li>
+          <li>
+            <strong>Read source values by position, not by trusting labels.</strong> Several sheets repeat
+            header text (e.g. more than one "Description" column) so name matching alone is unreliable. I
+            mirrored the workbook's own approach: a <code>cell(sheetKey, tais, colLetter)</code> helper reads
+            a value by its exact Excel column letter (converted to a zero based index), exactly as the
+            original <code>VLOOKUP</code>s do e.g. duty is <code>December!AU + December!AV</code>, dealer
+            billing retail is <code>Dealer Billing!I</code>.
+          </li>
+          <li>
+            <strong>Built a fuzzy header token matcher for the identity/label fields.</strong> Fields that are
+            just for display (description, brand, segment, e-series) don't need to be pixel perfect, so
+            those are resolved by tokenising column headers (upper casing, splitting on non alphanumerics)
+            and matching against a target word list this way the dashboard tolerates minor header renames
+            across monthly file refreshes without needing a code change.
+          </li>
+          <li>
+            <strong>Modelled two parallel financial "spines" from one set of inputs.</strong> The workbook
+            distinguishes a <em>Profitability View</em> (includes service costs and refurbishment, excludes
+            the motorplan balance) from a <em>Tax View</em> (includes the motorplan balance, excludes
+            service/refurbishment). I built both as separate result objects (<code>pv</code> and
+            <code>tv</code>) computed from the same underlying vehicle figures, so neither view can silently
+            drift out of sync with the other.
+          </li>
+          <li>
+            <strong>Made the viability verdict explicit and auditable.</strong> Every model gets a plain English
+            status, "Structure is economically viable" vs. "Structure results in economic loss" derived
+            directly from the sign of the computed profit figures (company benefit &gt; 0 <em>and</em> group
+            profit &ge; 0 = <strong>VIABLE</strong>), shown as colour coded badges instead of forcing the
+            reader to interpret raw numbers.
+          </li>
+          <li>
+            <strong>Designed three ways to get data in, for three real workflows.</strong> Drag and drop for
+            a one off check, a live folder watch (File System Access API, polling every 10 seconds) for an
+            analyst who keeps the shared drive open, and a published JSON snapshot polled every 60 seconds
+            for anyone who just wants to view the current numbers without touching any files at all.
+          </li>
+          <li>
+            <strong>Built a volume weighted Executive Summary on top of the same engine.</strong> Rather than
+            reviewing models one at a time, the "Executive Summary" tab recomputes every car in the loaded
+            file(s), joins in planning volumes, and rolls the whole scheme up into a viable/not viable
+            portfolio ladder, surfacing the highest volume non viable models first, since those are the
+            biggest euro exposure to fix.
+          </li>
+        </ul>
+
+        <h3 style="margin-top: 28px;">Key Features</h3>
+        <ul>
+          <li>Client-side parsing of .xlsb / .xlsx / .xlsm source workbooks, no upload, no backend, data never leaves the browser</li>
+          <li>Faithful line by line reimplementation of a 100+ row Excel financial model, each figure traceable back to its original cell reference</li>
+          <li>Fixed column (VLOOKUP equivalent) reads for every financial figure, plus a fuzzy token matcher for display only identity fields</li>
+          <li>Two parallel calculated views (Profitability &amp; Tax) sharing one set of source inputs</li>
+          <li>Editable overall assumptions (loan term, interest rate, commission, VAT, insurance) with instant recalculation across every loaded model</li>
+          <li>Executive Summary tab: volume weighted viable/not viable roll up with the biggest non viable exposures called out automatically</li>
+          <li>Three independent data loading paths (manual upload, live folder watch, published JSON feed) plus one click CSV export</li>
+        </ul>
+
+        <h3 style="margin-top: 28px;">Impact</h3>
+        <ul>
+          <li>Turned a single model, protected Excel tab into an instant, portfolio wide viability check across every model in the scheme</li>
+          <li>Removed the need to manually rekey figures through the workbook for each model, the dashboard reads all 8+ source sheets directly</li>
+          <li>Surfaces the highest volume loss making models automatically, instead of relying on ad hoc manual review</li>
+          <li>Zero deployment footprint, a single HTML file that runs offline in any modern browser, with no license, install, or server cost</li>
+          <li>Every computed figure is traceable back to its exact Excel cell reference, keeping the model auditable against the original workbook</li>
+        </ul>
+
+        <div class="tags" style="margin-top: 24px;">
+          <span class="tag">JavaScript</span>
+          <span class="tag">SheetJS</span>
+          <span class="tag">Financial Modelling</span>
+          <span class="tag">Excel Automation</span>
+          <span class="tag">Client-Side Data Processing</span>
+          <span class="tag">Data Reconciliation</span>
+          <span class="tag">Dashboarding</span>
+        </div>
+
+        <div class="hero-actions" style="margin-top: 24px;">
+          <a class="btn" href="./index.html#projects">Back to Portfolio</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <p>&copy; 2026 Thato Moeng. Built with curiosity and coffee.</p>
+    </div>
+  </footer>
+</body>
+</html>
